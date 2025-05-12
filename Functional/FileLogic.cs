@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace TFLaComp_1
+namespace TFLaComp_CW.Functional
 {
     public class FileLogic : IFileLogic
     {
@@ -30,7 +30,7 @@ namespace TFLaComp_1
                     currentFilePath = openFileDialog.FileName;
                     //try
                     //{
-                        return File.ReadAllText(currentFilePath);
+                    return File.ReadAllText(currentFilePath);
                     //}
                     //catch (Exception ex)
                     //{

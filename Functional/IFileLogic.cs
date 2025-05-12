@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace TFLaComp_1
+namespace TFLaComp_CW.Functional
 {
     public interface IFileLogic
     {

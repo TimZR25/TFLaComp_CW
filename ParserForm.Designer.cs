@@ -70,9 +70,15 @@
             copy = new Button();
             helpProvider1 = new HelpProvider();
             toolTip1 = new ToolTip(components);
-            dataGridViewOutput = new DataGridView();
+            richTextBoxOutput = new RichTextBox();
+            tabControl1 = new TabControl();
+            tabPage1 = new TabPage();
+            tabPage2 = new TabPage();
+            richTextBoxTokens = new RichTextBox();
             menuStrip1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)dataGridViewOutput).BeginInit();
+            tabControl1.SuspendLayout();
+            tabPage1.SuspendLayout();
+            tabPage2.SuspendLayout();
             SuspendLayout();
             // 
             // menuStrip1
@@ -428,26 +434,62 @@
             copy.UseVisualStyleBackColor = true;
             copy.Click += copy_Click;
             // 
-            // dataGridViewOutput
+            // richTextBoxOutput
             // 
-            dataGridViewOutput.AllowUserToDeleteRows = false;
-            dataGridViewOutput.AllowUserToResizeColumns = false;
-            dataGridViewOutput.AllowUserToResizeRows = false;
-            dataGridViewOutput.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
-            dataGridViewOutput.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridViewOutput.Location = new Point(10, 285);
-            dataGridViewOutput.Name = "dataGridViewOutput";
-            dataGridViewOutput.ReadOnly = true;
-            dataGridViewOutput.RowHeadersWidth = 51;
-            dataGridViewOutput.Size = new Size(680, 301);
-            dataGridViewOutput.TabIndex = 12;
+            richTextBoxOutput.Location = new Point(0, 0);
+            richTextBoxOutput.Name = "richTextBoxOutput";
+            richTextBoxOutput.ReadOnly = true;
+            richTextBoxOutput.Size = new Size(672, 277);
+            richTextBoxOutput.TabIndex = 12;
+            richTextBoxOutput.Text = "";
+            // 
+            // tabControl1
+            // 
+            tabControl1.Controls.Add(tabPage1);
+            tabControl1.Controls.Add(tabPage2);
+            tabControl1.Location = new Point(13, 285);
+            tabControl1.Name = "tabControl1";
+            tabControl1.SelectedIndex = 0;
+            tabControl1.Size = new Size(679, 301);
+            tabControl1.TabIndex = 13;
+            // 
+            // tabPage1
+            // 
+            tabPage1.Controls.Add(richTextBoxOutput);
+            tabPage1.Location = new Point(4, 24);
+            tabPage1.Name = "tabPage1";
+            tabPage1.Padding = new Padding(3);
+            tabPage1.Size = new Size(671, 273);
+            tabPage1.TabIndex = 0;
+            tabPage1.Text = "Анализ";
+            tabPage1.UseVisualStyleBackColor = true;
+            // 
+            // tabPage2
+            // 
+            tabPage2.Controls.Add(richTextBoxTokens);
+            tabPage2.Location = new Point(4, 24);
+            tabPage2.Name = "tabPage2";
+            tabPage2.Padding = new Padding(3);
+            tabPage2.Size = new Size(671, 273);
+            tabPage2.TabIndex = 1;
+            tabPage2.Text = "Лексемы";
+            tabPage2.UseVisualStyleBackColor = true;
+            // 
+            // richTextBoxTokens
+            // 
+            richTextBoxTokens.Location = new Point(0, 0);
+            richTextBoxTokens.Name = "richTextBoxTokens";
+            richTextBoxTokens.ReadOnly = true;
+            richTextBoxTokens.Size = new Size(671, 270);
+            richTextBoxTokens.TabIndex = 0;
+            richTextBoxTokens.Text = "";
             // 
             // ParserForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(701, 598);
-            Controls.Add(dataGridViewOutput);
+            Controls.Add(tabControl1);
             Controls.Add(copy);
             Controls.Add(richTextBoxInput);
             Controls.Add(paste);
@@ -467,7 +509,9 @@
             Text = "Парсер";
             menuStrip1.ResumeLayout(false);
             menuStrip1.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)dataGridViewOutput).EndInit();
+            tabControl1.ResumeLayout(false);
+            tabPage1.ResumeLayout(false);
+            tabPage2.ResumeLayout(false);
             ResumeLayout(false);
             PerformLayout();
         }
@@ -514,6 +558,10 @@
         internal Button cut;
         internal Button paste;
         private ToolTip toolTip1;
-        private DataGridView dataGridViewOutput;
+        private RichTextBox richTextBoxOutput;
+        private TabControl tabControl1;
+        private TabPage tabPage1;
+        private TabPage tabPage2;
+        private RichTextBox richTextBoxTokens;
     }
 }
