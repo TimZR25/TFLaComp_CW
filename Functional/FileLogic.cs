@@ -1,11 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
-
-namespace TFLaComp_CW.Functional
+﻿namespace TFLaComp_CW.Functional
 {
     public class FileLogic : IFileLogic
     {

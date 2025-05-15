@@ -1,9 +1,8 @@
-using TFLaComp_1.Functional;
-using TFLaComp_1.ParserHelp;
 using TFLaComp_CW.Functional;
+using TFLaComp_CW.ParserHelp;
 using TFLaComp_CW.Parsers;
 
-namespace TFLaComp_1
+namespace TFLaComp_CW
 {
     public enum ParserType
     {
@@ -23,7 +22,7 @@ namespace TFLaComp_1
         public ParserForm()
         {
             InitializeComponent();
-            
+
             InitEdit();
             _logic = new FileLogic();
 

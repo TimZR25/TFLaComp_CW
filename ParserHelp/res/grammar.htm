@@ -1,0 +1,61 @@
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML//EN">
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=windows-1251">
+    <meta name="GENERATOR" content="Microsoft&reg; HTML Help Workshop 4.1">
+    <Title>Формальная грамматика оператора READ</Title>
+    <style>
+        .grammar {
+            font-family: Consolas, monospace;
+            margin-left: 20px;
+            line-height: 1.5;
+        }
+        .symbols {
+            margin-left: 40px;
+        }
+        .components {
+            margin-left: 20px;
+        }
+        h3 {
+            margin-bottom: 5px;
+        }
+    </style>
+</head>
+<body>
+
+<h1>Формальная грамматика G[&lt;R&gt;] для оператора ввода READ(*, *)</h1>
+
+<h2>Продукции P в нотации Хомского:</h2>
+<div class="grammar">
+<p>1. &lt;R&gt; &rarr; 'READ' &lt;OB&gt;</p>
+<p>2. &lt;OB&gt; &rarr; '(' &lt;FP&gt;</p>
+<p>3. &lt;FP&gt; &rarr; '*' &lt;C&gt;</p>
+<p>4. &lt;C&gt; &rarr; ',' &lt;SP&gt;</p>
+<p>5. &lt;SP&gt; &rarr; '*' &lt;CB&gt;</p>
+<p>6. &lt;CB&gt; &rarr; ')' &lt;VS&gt;</p>
+<p>7. &lt;VS&gt; &rarr; letter &lt;VE&gt;</p>
+<p>8. &lt;VE&gt; &rarr; ',' &lt;VS&gt; | &lt;E&gt; | letter &lt;VE&gt; | digit &lt;VE&gt;</p>
+<p>9. &lt;E&gt; &rarr; ';'</p>
+</div>
+
+<h3>Терминальные символы:</h3>
+<div class="symbols">
+<p>letter &rarr; a | b | ... | z | A | B | ... | Z</p>
+<p>digit &rarr; 0 | 1 | ... | 9</p>
+</div>
+
+<h2>Составляющие грамматики G[&lt;R&gt;]:</h2>
+<div class="components">
+<p>&bull; Z = &lt;R&gt;;</p>
+<p>&bull; V<sub>T</sub> = { (, ), *, ,, ;, a, b, ..., z, A, B, ..., Z, 0, 1, ..., 9};</p>
+<p>&bull; V<sub>N</sub> = {&lt;R&gt;, &lt;OB&gt;, &lt;FP&gt;, &lt;C&gt;, &lt;SP&gt;, &lt;CB&gt;, &lt;VS&gt;, &lt;VE&gt;};</p>
+</div>
+
+<h3>Обозначения:</h3>
+<ul>
+    <li>&rarr; - выводится в</li>
+    <li>| - альтернатива (или)</li>
+</ul>
+
+</body>
+</html>

@@ -1,6 +1,4 @@
-﻿using System.Text;
-
-namespace TFLaComp_1.Functional
+﻿namespace TFLaComp_CW.Functional
 {
     public class Edit : IEdit
     {

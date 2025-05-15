@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace TFLaComp_1.ParserHelp
+namespace TFLaComp_CW.ParserHelp
 {
     public interface IParserHelpProvider
     {

@@ -1,4 +1,4 @@
-﻿namespace TFLaComp_1
+﻿namespace TFLaComp_CW
 {
     partial class ParserForm
     {

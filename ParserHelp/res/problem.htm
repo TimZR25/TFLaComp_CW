@@ -1,0 +1,51 @@
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML//EN">
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=windows-1251">
+    <meta name="GENERATOR" content="Microsoft&reg; HTML Help Workshop 4.1">
+    <Title>Оператор READ</Title>
+</head>
+<body>
+
+<h1>Оператор ввода READ(*,*)</h1>
+
+<p>Оператор используется для ввода данных с клавиатуры (стандартный ввод) без строгого указания формата. Данные интерпретируются автоматически на основе типов переменных в списке ввода.</p>
+
+<h2>Формат записи:</h2>
+<pre>READ(*, *) variable1, variable2, ...;</pre>
+
+<h2>Параметры:</h2>
+<ul>
+    <li><strong>Первый *</strong> — обозначает стандартный ввод (обычно клавиатура)</li>
+    <li><strong>Второй *</strong> — свободный формат (данные читаются в зависимости от типа переменных)</li>
+    <li><strong>variable1, variable2, ...</strong> — список переменных для записи значений</li>
+    <li><strong>;</strong> — завершает оператор</li>
+</ul>
+
+<div style="background:#FFFFCC; padding:5px; border:1px solid #FFCC00;">
+<p><strong>Примечание:</strong> FORTRAN нечувствителен к регистру: <code>READ</code>, <code>read</code>, <code>ReAd</code> — одинаковы.</p>
+</div>
+
+<h2>Примеры корректных записей:</h2>
+
+<div style="background:#F0F8FF; padding:5px; border:1px solid #87CEFA;">
+<p>1) Чтение двух переменных:</p>
+<pre>READ(*, *) x, y;</pre>
+</div>
+
+<div style="background:#F0F8FF; padding:5px; border:1px solid #87CEFA;">
+<p>2) Чтение массива:</p>
+<pre>read(*,*) arr;</pre>
+</div>
+
+<div style="background:#F0F8FF; padding:5px; border:1px solid #87CEFA;">
+<p>3) Чтение переменных в разном регистре:</p>
+<pre>rEaD(*, *) var1, var2;</pre>
+</div>
+
+<div style="background:#FFEBEE; padding:5px; border:1px solid #FFCDD2;">
+<p><strong>Особенность:</strong> В связи с разработанной автоматной грамматикой G[&lt;R&gt;] приведенные выше записи будут распознаны синтаксическим анализатором как корректные.</p>
+</div>
+
+</body>
+</html>
