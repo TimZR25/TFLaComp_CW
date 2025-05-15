@@ -3,6 +3,6 @@
     public enum TokenType
     {
         READ, LPAREN, RPAREN, STAR, COMMA, SEMICOLON,
-        LETTER, DIGIT, EOF, UNKNOWN
+        VARIABLE, EOF, UNKNOWN
     }
 }

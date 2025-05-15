@@ -68,13 +68,13 @@
             paste = new Button();
             richTextBoxInput = new RichTextBox();
             copy = new Button();
-            helpProvider1 = new HelpProvider();
             toolTip1 = new ToolTip(components);
             richTextBoxOutput = new RichTextBox();
             tabControl1 = new TabControl();
             tabPage1 = new TabPage();
             tabPage2 = new TabPage();
             richTextBoxTokens = new RichTextBox();
+            helpProvider1 = new HelpProvider();
             menuStrip1.SuspendLayout();
             tabControl1.SuspendLayout();
             tabPage1.SuspendLayout();
@@ -288,7 +288,6 @@
             file.Location = new Point(10, 28);
             file.Margin = new Padding(3, 2, 3, 2);
             file.Name = "file";
-            helpProvider1.SetShowHelp(file, false);
             file.Size = new Size(36, 31);
             file.TabIndex = 1;
             file.Tag = "";
@@ -304,7 +303,6 @@
             open.Location = new Point(48, 28);
             open.Margin = new Padding(3, 2, 3, 2);
             open.Name = "open";
-            helpProvider1.SetShowHelp(open, false);
             open.Size = new Size(36, 31);
             open.TabIndex = 2;
             open.Tag = "";
@@ -320,7 +318,6 @@
             save.Location = new Point(85, 28);
             save.Margin = new Padding(3, 2, 3, 2);
             save.Name = "save";
-            helpProvider1.SetShowHelp(save, false);
             save.Size = new Size(36, 31);
             save.TabIndex = 3;
             save.Tag = "";
@@ -336,7 +333,6 @@
             start.Location = new Point(140, 28);
             start.Margin = new Padding(3, 2, 3, 2);
             start.Name = "start";
-            helpProvider1.SetShowHelp(start, false);
             start.Size = new Size(36, 31);
             start.TabIndex = 4;
             start.Tag = "";
@@ -352,7 +348,6 @@
             undo.Location = new Point(196, 28);
             undo.Margin = new Padding(3, 2, 3, 2);
             undo.Name = "undo";
-            helpProvider1.SetShowHelp(undo, false);
             undo.Size = new Size(36, 31);
             undo.TabIndex = 5;
             undo.Tag = "";
@@ -368,7 +363,6 @@
             redo.Location = new Point(234, 28);
             redo.Margin = new Padding(3, 2, 3, 2);
             redo.Name = "redo";
-            helpProvider1.SetShowHelp(redo, false);
             redo.Size = new Size(36, 31);
             redo.TabIndex = 6;
             redo.Tag = "";
@@ -384,7 +378,6 @@
             cut.Location = new Point(291, 28);
             cut.Margin = new Padding(3, 2, 3, 2);
             cut.Name = "cut";
-            helpProvider1.SetShowHelp(cut, false);
             cut.Size = new Size(36, 31);
             cut.TabIndex = 7;
             cut.Tag = "";
@@ -400,7 +393,6 @@
             paste.Location = new Point(329, 28);
             paste.Margin = new Padding(3, 2, 3, 2);
             paste.Name = "paste";
-            helpProvider1.SetShowHelp(paste, false);
             paste.Size = new Size(36, 31);
             paste.TabIndex = 8;
             paste.Tag = "";
@@ -548,7 +540,6 @@
         private ToolStripMenuItem sourceCodeToolStripMenuItem;
         private ToolStripMenuItem callHelpToolStripMenuItem;
         private ToolStripMenuItem aboutCodeToolStripMenuItem;
-        private HelpProvider helpProvider1;
         internal Button file;
         internal Button open;
         internal Button save;
@@ -563,5 +554,6 @@
         private TabPage tabPage1;
         private TabPage tabPage2;
         private RichTextBox richTextBoxTokens;
+        private HelpProvider helpProvider1;
     }
 }

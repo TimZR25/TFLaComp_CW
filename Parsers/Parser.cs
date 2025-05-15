@@ -6,33 +6,39 @@
         private int _pos = 0;
         private readonly List<string> _log = new List<string>();
 
+        private string _input;
+
         // Follow-множества для синхронизации
         private static readonly HashSet<TokenType> FollowR = new() { TokenType.EOF };
-        private static readonly HashSet<TokenType> FollowOB = new() { TokenType.LETTER };
+        private static readonly HashSet<TokenType> FollowOB = new() { TokenType.VARIABLE };
         private static readonly HashSet<TokenType> FollowFP = new() { TokenType.COMMA };
         private static readonly HashSet<TokenType> FollowC = new() { TokenType.STAR };
         private static readonly HashSet<TokenType> FollowSP = new() { TokenType.RPAREN };
-        private static readonly HashSet<TokenType> FollowCB = new() { TokenType.LETTER };
+        private static readonly HashSet<TokenType> FollowCB = new() { TokenType.VARIABLE };
         private static readonly HashSet<TokenType> FollowVS = new() { TokenType.SEMICOLON };
         private static readonly HashSet<TokenType> FollowVE = new() { TokenType.SEMICOLON };
         private static readonly HashSet<TokenType> FollowE = new() { TokenType.EOF };
 
-        public Parser(List<Token> tokens)
+        public Parser(List<Token> tokens, string input)
         {
             _tokens = tokens;
+            _input = input;
         }
 
         public List<string> Parse()
         {
-            R();
+            while (_pos < _tokens.Count - 1)
+            {
+                R();
+            }
+
             if (Current.Type != TokenType.EOF)
                 ErrorRecovery(TokenType.EOF, FollowR);
-            Console.WriteLine("Разбор завершён. Журнал корректировок:");
 
             return _log;
         }
 
-        private Token Current => _pos < _tokens.Count ? _tokens[_pos] : new Token(TokenType.EOF, "", _pos);
+        private Token Current => _pos < _tokens.Count ? _tokens[_pos] : new Token(TokenType.EOF, "", _pos, 0);
 
         private void Advance() => _pos++;
 
@@ -42,13 +48,69 @@
             // Попытаться пропустить «ложный» токен
             if (!syncSet.Contains(actual))
             {
-                _log.Add($"[Delete] pos={Current.Position} «{actual}», expected «{expected}»");
+                if (actual == TokenType.UNKNOWN)
+                {
+                    bool isLast = true;
+                    string s = Current.Lexeme;
+                    string errors = "";
+                    int index = 0;
+
+                    for (int i = 0; i < s.Length; i++)
+                    {
+                        if (char.IsLetterOrDigit(s[i]) == false)
+                        {
+                            if (isLast == false)
+                            {
+                                errors += s[i];
+                                continue;
+                            }
+
+                            isLast = false;
+
+                            int line = Current.Line;
+                            int pos = _pos;
+                            int l = 0;
+                            _pos--;
+                            while (_pos > 0 && line == Current.Line)
+                            {
+                                l += Current.Lexeme.Length;
+
+                                _pos--;
+                            }
+                            _pos = pos;
+
+                            index = l + i;
+                            errors += s[i];
+                        }
+                        else
+                        {
+                            if (errors.Length > 0)
+                            {
+                                _log.Add($"[Delete] line={Current.Line} pos={index} «{errors}» from «{Current.Lexeme}», expected «{expected}»");
+                            }
+
+                            errors = "";
+                            index = 0;
+
+                            isLast = true;
+                        }
+                    }
+                    if (errors.Length > 0)
+                    {
+                        _log.Add($"[Delete] line={Current.Line} pos={index} «{errors}» from «{Current.Lexeme}», expected «{expected}»");
+                    }
+
+                    Advance();
+
+                    return;
+                }
+                _log.Add($"[Delete] line={Current.Line} pos={Current.Position} «{actual}», expected «{expected}»");
                 Advance();
             }
             else
             {
                 // Вставка
-                _log.Add($"[Insert] pos={Current.Position} inserted «{expected}»");
+                _log.Add($"[Insert] line={Current.Line} pos={Current.Position} inserted «{expected}»");
             }
         }
 
@@ -114,14 +176,14 @@
             VS();
         }
 
-        // <VS> → LETTER <VE>
+        // <VS> → variable <VE>
         private void VS()
         {
-            Match(TokenType.LETTER, FollowVS);
+            Match(TokenType.VARIABLE, FollowVS);
             VE();
         }
 
-        // <VE> → ',' <VS> | ';' | LETTER <VE> | DIGIT <VE>
+        // <VE> → ',' <VS> | ';' | variable <VE>
         private void VE()
         {
             if (Current.Type == TokenType.COMMA)
@@ -133,15 +195,10 @@
             {
                 E();
             }
-            else if (Current.Type == TokenType.LETTER)
+            else if (Current.Type == TokenType.VARIABLE)
             {
-                Match(TokenType.LETTER, FollowVE);
-                VE();
-            }
-            else if (Current.Type == TokenType.DIGIT)
-            {
-                Match(TokenType.DIGIT, FollowVE);
-                VE();
+                Match(TokenType.VARIABLE, FollowVE);
+                VS();
             }
             else
             {

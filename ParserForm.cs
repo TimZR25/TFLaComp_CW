@@ -60,7 +60,7 @@ namespace TFLaComp_1
 
             Lexer lexer = new Lexer();
             List<Token> tokens = lexer.GetTokens(richTextBoxInput.Text);
-            var parser = new Parser(tokens);
+            var parser = new Parser(tokens, richTextBoxInput.Text);
             try
             {
                 var log = parser.Parse();
@@ -77,7 +77,7 @@ namespace TFLaComp_1
 
             foreach (var token in tokens)
             {
-                richTextBoxTokens.Text += $"{token.Position} | {token.Lexeme} | {token.Type} \n";
+                richTextBoxTokens.Text += $" {token.Line} | {token.Position} | {token.Lexeme} | {token.Type} \n";
             }
 
             richTextBoxInput.ClearUndo();

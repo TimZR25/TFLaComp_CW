@@ -62,5 +62,34 @@
 		<param name="Name" value="&Icirc; &iuml;&eth;&icirc;&atilde;&eth;&agrave;&igrave;&igrave;&aring;">
 		<param name="Local" value="help.htm">
 		</OBJECT>
+	<LI> <OBJECT type="text/sitemap">
+		<param name="Name" value="&Ntilde;&egrave;&iacute;&ograve;&agrave;&ecirc;&ntilde;&egrave;&divide;&aring;&ntilde;&ecirc;&egrave;&eacute; &agrave;&iacute;&agrave;&euml;&egrave;&ccedil; &auml;&aring;&ntilde;&yuml;&ograve;&egrave;&divide;&iacute;&icirc;&atilde;&icirc; &divide;&egrave;&ntilde;&euml;&agrave;">
+		</OBJECT>
+	<UL>
+		<LI> <OBJECT type="text/sitemap">
+			<param name="Name" value="&Atilde;&eth;&agrave;&igrave;&igrave;&agrave;&ograve;&egrave;&ecirc;&agrave; &divide;&egrave;&ntilde;&euml;&agrave;">
+			<param name="Local" value="grammarSA.htm">
+			</OBJECT>
+		<LI> <OBJECT type="text/sitemap">
+			<param name="Name" value="&szlig;&ccedil;&ucirc;&ecirc; &auml;&euml;&yuml; &Auml;&times;">
+			<param name="Local" value="languageSA.htm">
+			</OBJECT>
+		<LI> <OBJECT type="text/sitemap">
+			<param name="Name" value="&Ecirc;&euml;&agrave;&ntilde;&ntilde;&egrave;&ocirc;&egrave;&ecirc;&agrave;&ouml;&egrave;&yuml; &atilde;&eth;&agrave;&igrave;&igrave;&agrave;&ograve;&egrave;&ecirc;&egrave; &Auml;&times;">
+			<param name="Local" value="classSA.htm">
+			</OBJECT>
+		<LI> <OBJECT type="text/sitemap">
+			<param name="Name" value="&Atilde;&eth;&agrave;&ocirc; &ntilde;&icirc;&ntilde;&ograve;&icirc;&yuml;&iacute;&egrave;&eacute; &Auml;&times;">
+			<param name="Local" value="graphSA.htm">
+			</OBJECT>
+		<LI> <OBJECT type="text/sitemap">
+			<param name="Name" value="&Igrave;&aring;&ograve;&icirc;&auml; &iacute;&aring;&eacute;&ograve;&eth;&agrave;&euml;&egrave;&ccedil;&agrave;&ouml;&egrave;&egrave; &Auml;&times;">
+			<param name="Local" value="methodSA.htm">
+			</OBJECT>
+		<LI> <OBJECT type="text/sitemap">
+			<param name="Name" value="&Ograve;&aring;&ntilde;&ograve;&icirc;&acirc;&ucirc;&eacute; &iuml;&eth;&egrave;&igrave;&aring;&eth; &Auml;&times;">
+			<param name="Local" value="testexampleSA.htm">
+			</OBJECT>
+	</UL>
 </UL>
 </BODY></HTML>

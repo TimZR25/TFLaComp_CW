@@ -10,57 +10,59 @@ namespace TFLaComp_CW.Parsers
     {
         public List<Token> GetTokens(string input)
         {
+            var lines = input.Split('\n');
             var tokens = new List<Token>();
-            var parts = input
-                .Replace("(", " ( ")
-                .Replace(")", " ) ")
-                .Replace(",", " , ")
-                .Replace(";", " ; ")
-                .Split(new[] { ' ', '\t', '\n' }, StringSplitOptions.RemoveEmptyEntries);
 
             int index = 0;
 
-            for (int i = 0; i < parts.Length; i++, index++)
+            for (int l = 0; l < lines.Length; l++)
             {
-                var s = parts[i].ToLower();
+                var parts = lines[l]
+                    .Replace("(", " ( ")
+                    .Replace(")", " ) ")
+                    .Replace(",", " , ")
+                    .Replace(";", " ; ")
+                    .Split(new[] { ' ', '\t', '\v' }, StringSplitOptions.RemoveEmptyEntries);
 
-                TokenType type = s switch
+                for (int i = 0; i < parts.Length; i++, index++)
                 {
-                    "read" => TokenType.READ,
-                    "(" => TokenType.LPAREN,
-                    ")" => TokenType.RPAREN,
-                    "*" => TokenType.STAR,
-                    "," => TokenType.COMMA,
-                    ";" => TokenType.SEMICOLON,
-                    _ => TokenType.UNKNOWN
-                };
+                    string s = parts[i];
+                    var ls = parts[i].ToLower();
 
-                if (type == TokenType.UNKNOWN)
-                {
-                    for (int j = 0; j < s.Length; j++)
+                    TokenType type = ls switch
                     {
-                        if (char.IsLetter(s[j]))
+                        "read" => TokenType.READ,
+                        "(" => TokenType.LPAREN,
+                        ")" => TokenType.RPAREN,
+                        "*" => TokenType.STAR,
+                        "," => TokenType.COMMA,
+                        ";" => TokenType.SEMICOLON,
+                        _ => TokenType.UNKNOWN
+                    };
+
+                    if (type == TokenType.UNKNOWN)
+                    {
+                        if (char.IsLetter(s[0]) == true)
                         {
-                            tokens.Add(new Token(TokenType.LETTER, s[j].ToString(), index + j));
+                            type = TokenType.VARIABLE;
                         }
-                        else if (char.IsDigit(s[j]))
+
+                        for (int j = 0; j < s.Length; j++)
                         {
-                            tokens.Add(new Token(TokenType.DIGIT, s[j].ToString(), index + j));
-                        }
-                        else
-                        {
-                            tokens.Add(new Token(TokenType.UNKNOWN, s[j].ToString(), index + j));
+                            if (char.IsLetterOrDigit(s[j]) == false)
+                            {
+                                type = TokenType.UNKNOWN;
+                                break;
+                            }
                         }
                     }
 
-                    index += s.Length - 1;
-
-                    continue;
+                    tokens.Add(new Token(type, s, index, l + 1));
                 }
-
-                tokens.Add(new Token(type, s, index));
             }
-            tokens.Add(new Token(TokenType.EOF, "", index));
+
+            tokens.Add(new Token(TokenType.EOF, "", index, lines.Length));
+
             return tokens;
         }
     }
