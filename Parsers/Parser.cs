@@ -52,14 +52,14 @@
                 int pos = _pos;
                 List<string> logs = new List<string>();
 
-                int t = _tokens.Count;
-                while (Current.Type != expected && t > 0)
+                int t = _pos;
+                while (Current.Type != expected && t < _tokens.Count)
                 {
                     logs.Add($"[Грамматическая ошибка] строка: {Current.Line} позиция: {Current.Position} удалена «{Current.Lexeme}»");
 
                     _pos++;
 
-                    t--;
+                    t++;
                 }
 
                 if (Current.Type == expected)
@@ -92,7 +92,6 @@
                     // Вставка
                     Logs.Add($"[Грамматическая ошибка] строка: {Current.Line} позиция: {Current.Position} вставлен «{Token.GetTypeName(expected)}»");
                 }
-
             }
         }
 
@@ -165,7 +164,7 @@
             VE();
         }
 
-        // <VE> → ',' <VS> | ';' | variable <VE>
+        // <VE> → ',' <VS> | ';'
         private void VE()
         {
             if (Current.Type == TokenType.COMMA)
@@ -179,8 +178,8 @@
             }
             else if (Current.Type == TokenType.VARIABLE)
             {
-                Match(TokenType.VARIABLE, FollowVE);
-                VS();
+                ErrorRecovery(TokenType.SEMICOLON, FollowVE);
+                E();
             }
             else
             {
