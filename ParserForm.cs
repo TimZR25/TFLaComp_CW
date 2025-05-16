@@ -59,19 +59,18 @@ namespace TFLaComp_CW
 
             Lexer lexer = new Lexer();
             List<Token> tokens = lexer.GetTokens(richTextBoxInput.Text);
-            var parser = new Parser(tokens, richTextBoxInput.Text);
-            try
-            {
-                var log = parser.Parse();
+            var parser = new Parser(tokens);
 
-                foreach (var token in log)
-                {
-                    richTextBoxOutput.Text += token + "\n";
-                }
-            }
-            catch (Exception ex)
+            parser.Parse();
+
+            foreach (var log in lexer.Logs)
             {
-                richTextBoxOutput.Text = "Fatal: " + ex.Message;
+                richTextBoxOutput.Text += log + "\n";
+            }
+
+            foreach (var log in parser.Logs)
+            {
+                richTextBoxOutput.Text += log + "\n";
             }
 
             foreach (var token in tokens)
@@ -79,7 +78,11 @@ namespace TFLaComp_CW
                 richTextBoxTokens.Text += $" {token.Line} | {token.Position} | {token.Lexeme} | {token.Type} \n";
             }
 
-            richTextBoxInput.ClearUndo();
+            if (string.IsNullOrEmpty(richTextBoxOutput.Text))
+            {
+                richTextBoxOutput.Text = "Ошибок не обнаружено";
+            }
+
             OnStateChanged();
         }
 

@@ -2,31 +2,27 @@
 <HTML>
 <HEAD>
 <meta name="GENERATOR" content="Microsoft&reg; HTML Help Workshop 4.1">
-<Title>Классификация грамматики scanf</Title>
+<TITLE>Классификация грамматики READ</TITLE>
 </HEAD>
 <BODY>
 
-<h1>Классификация грамматики G[‹SCANF›]</h1>
+<h1>Классификация грамматики G[‹READ›]</h1>
 
 <h2>Тип грамматики:</h2>
-<p>Согласно классификации Хомского, грамматика G[‹SCANF›] является <strong>контекстно-свободной</strong>.</p>
+<p>Согласно классификации Хомского, грамматика G[‹READ›] является <strong>контекстно-свободной</strong> (Тип 2 по Хомскому).</p>
 <p>Правила представлены в <strong>праворекурсивной форме</strong>.</p>
 
 <h2>Продукции грамматики:</h2>
 <ol>
-    <li>&lt;SC&gt; > 'scanf' &lt;BC&gt; ';'</li>
-    <li>&lt;BC&gt; > '(' &lt;FS&gt; &lt;A&gt; ')'</li>
-    <li>&lt;FS&gt; > '"' &lt;FC&gt; '"'</li>
-    <li>&lt;FC&gt; > ?</li>
-    <li>&lt;FC&gt; > &lt;C&gt;</li>
-    <li>&lt;FC&gt; > "%" &lt;SP&gt;</li>
-    <li>&lt;A&gt; > ?</li>
-    <li>&lt;A&gt; > ',' '&' &lt;N&gt; &lt;MA&gt;</li>
-    <li>&lt;MA&gt; > ?</li>
-    <li>&lt;MA&gt; > ',' '&' &lt;N&gt; &lt;MA&gt;</li>
-    <li>&lt;N&gt; > &lt;L&gt; &lt;NT&gt;</li>
-    <li>&lt;NT&gt; > ?</li>
-    <li>&lt;NT&gt; > &lt;D&gt; &lt;NT&gt; | &lt;L&gt; &lt;NT&gt;</li>
+    <li>&lt;R&gt; > 'READ' &lt;OB&gt;</li>
+    <li>&lt;OB&gt; > '(' &lt;FP&gt;</li>
+    <li>&lt;FP&gt; > '*' &lt;C&gt;</li>
+    <li>&lt;C&gt; > ',' &lt;SP&gt;</li>
+    <li>&lt;SP&gt; > '*' &lt;CB&gt;</li>
+    <li>&lt;CB&gt; > ')' &lt;VS&gt;</li>
+    <li>&lt;VS&gt; > 'letter' &lt;VE&gt;</li>
+    <li>&lt;VE&gt; > ',' &lt;VS&gt; | &lt;E&gt; | letter &lt;VE&gt; | digit &lt;VE&gt;</li>
+    <li>&lt;E&gt; > ';'</li>
 </ol>
 
 <h2>Сокращения нетерминалов:</h2>
@@ -36,61 +32,50 @@
         <th>Полная форма</th>
     </tr>
     <tr>
-        <td>&lt;SC&gt;</td>
-        <td>&lt;scanf-call&gt;</td>
+        <td>&lt;R&gt;</td>
+        <td>&lt;Read&gt;</td>
     </tr>
     <tr>
-        <td>&lt;BC&gt;</td>
-        <td>&lt;braces-content&gt;</td>
+        <td>&lt;OB&gt;</td>
+        <td>&lt;OpenBracket&gt;</td>
     </tr>
     <tr>
-        <td>&lt;FS&gt;</td>
-        <td>&lt;format-string&gt;</td>
-    </tr>
-    <tr>
-        <td>&lt;FC&gt;</td>
-        <td>&lt;format-char&gt;</td>
-    </tr>
-    <tr>
-        <td>&lt;SP&gt;</td>
-        <td>&lt;specifier&gt;</td>
-    </tr>
-    <tr>
-        <td>&lt;A&gt;</td>
-        <td>&lt;arguments&gt;</td>
-    </tr>
-    <tr>
-        <td>&lt;N&gt;</td>
-        <td>&lt;name&gt;</td>
-    </tr>
-    <tr>
-        <td>&lt;MA&gt;</td>
-        <td>&lt;more-arguments&gt;</td>
-    </tr>
-    <tr>
-        <td>&lt;NT&gt;</td>
-        <td>&lt;name-tail&gt;</td>
-    </tr>
-    <tr>
-        <td>&lt;L&gt;</td>
-        <td>&lt;letter&gt;</td>
-    </tr>
-    <tr>
-        <td>&lt;D&gt;</td>
-        <td>&lt;digit&gt;</td>
+        <td>&lt;FP&gt;</td>
+        <td>&lt;FirstParameter&gt;</td>
     </tr>
     <tr>
         <td>&lt;C&gt;</td>
-        <td>&lt;char&gt;</td>
+        <td>&lt;Comma&gt;</td>
+    </tr>
+    <tr>
+        <td>&lt;SP&gt;</td>
+        <td>&lt;SecondParameter&gt;</td>
+    </tr>
+    <tr>
+        <td>&lt;CB&gt;</td>
+        <td>&lt;CloseBracket&gt;</td>
+    </tr>
+    <tr>
+        <td>&lt;VS&gt;</td>
+        <td>&lt;VariableStart&gt;</td>
+    </tr>
+    <tr>
+        <td>&lt;VE&gt;</td>
+        <td>&lt;VariableEnd&gt;</td>
+    </tr>
+    <tr>
+        <td>&lt;E&gt;</td>
+        <td>&lt;End&gt;</td>
     </tr>
 </table>
 
 <h2>Особенности грамматики:</h2>
 <ul>
-    <li>Все продукции имеют единственный нетерминал в левой части</li>
-    <li>Рекурсия используется только в правой части правил</li>
-    <li>Грамматика допускает пустые цепочки (?-правила)</li>
-    <li>Соответствует определению КС-грамматики типа 2 по Хомскому</li>
+    <li>Все продукции имеют один нетерминал в левой части</li>
+    <li>Правила построены по праворекурсивному принципу</li>
+    <li>Некоторые продукции допускают альтернативы (|)</li>
+    <li>Присутствуют элементы допуска пустых цепочек (через ? или опциональные цепочки)</li>
+    <li>Грамматика соответствует требованиям КС-грамматик по Хомскому</li>
 </ul>
 
 </BODY>

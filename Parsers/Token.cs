@@ -14,6 +14,25 @@
             Position = pos;
             Line = line;
         }
+
+        public static string GetTypeName(TokenType type)
+        {
+            string s = type switch
+            {
+                TokenType.READ => "READ",
+                TokenType.OBRACKET => "(",
+                TokenType.CBRACKET => ")",
+                TokenType.STAR => "*",
+                TokenType.COMMA => ",",
+                TokenType.SEMICOLON => ";",
+                TokenType.VARIABLE => "VARIABLE",
+                TokenType.EOF => "EOF",
+                TokenType.UNKNOWN => "???",
+                _ => "???",
+            };
+
+            return s;
+        }
     }
 }
 

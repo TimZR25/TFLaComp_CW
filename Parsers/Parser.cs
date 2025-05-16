@@ -4,28 +4,25 @@
     {
         private readonly List<Token> _tokens;
         private int _pos = 0;
-        private readonly List<string> _log = new List<string>();
-
-        private string _input;
+        public List<string> Logs { get; } = new List<string>();
 
         // Follow-множества для синхронизации
-        private static readonly HashSet<TokenType> FollowR = new() { TokenType.EOF };
-        private static readonly HashSet<TokenType> FollowOB = new() { TokenType.VARIABLE };
+        private static readonly HashSet<TokenType> FollowR = new() { TokenType.OBRACKET};
+        private static readonly HashSet<TokenType> FollowOB = new() { TokenType.STAR};
         private static readonly HashSet<TokenType> FollowFP = new() { TokenType.COMMA };
         private static readonly HashSet<TokenType> FollowC = new() { TokenType.STAR };
-        private static readonly HashSet<TokenType> FollowSP = new() { TokenType.RPAREN };
+        private static readonly HashSet<TokenType> FollowSP = new() { TokenType.CBRACKET };
         private static readonly HashSet<TokenType> FollowCB = new() { TokenType.VARIABLE };
         private static readonly HashSet<TokenType> FollowVS = new() { TokenType.SEMICOLON };
         private static readonly HashSet<TokenType> FollowVE = new() { TokenType.SEMICOLON };
         private static readonly HashSet<TokenType> FollowE = new() { TokenType.EOF };
 
-        public Parser(List<Token> tokens, string input)
+        public Parser(List<Token> tokens)
         {
             _tokens = tokens;
-            _input = input;
         }
 
-        public List<string> Parse()
+        public void Parse()
         {
             while (_pos < _tokens.Count - 1)
             {
@@ -34,83 +31,68 @@
 
             if (Current.Type != TokenType.EOF)
                 ErrorRecovery(TokenType.EOF, FollowR);
-
-            return _log;
         }
 
         private Token Current => _pos < _tokens.Count ? _tokens[_pos] : new Token(TokenType.EOF, "", _pos, 0);
 
-        private void Advance() => _pos++;
-
         private void ErrorRecovery(TokenType expected, HashSet<TokenType> syncSet)
         {
             var actual = Current.Type;
+
+            if (actual == TokenType.EOF)
+            {
+                Logs.Add($"[Грамматическая ошибка] строка: {Current.Line} позиция: {Current.Position} вставлен «{Token.GetTypeName(expected)}»");
+
+                return;
+            }
+
             // Попытаться пропустить «ложный» токен
             if (!syncSet.Contains(actual))
             {
-                if (actual == TokenType.UNKNOWN)
+                int pos = _pos;
+                List<string> logs = new List<string>();
+
+                int t = _tokens.Count;
+                while (Current.Type != expected && t > 0)
                 {
-                    bool isLast = true;
-                    string s = Current.Lexeme;
-                    string errors = "";
-                    int index = 0;
+                    logs.Add($"[Грамматическая ошибка] строка: {Current.Line} позиция: {Current.Position} удалена «{Current.Lexeme}»");
 
-                    for (int i = 0; i < s.Length; i++)
-                    {
-                        if (char.IsLetterOrDigit(s[i]) == false)
-                        {
-                            if (isLast == false)
-                            {
-                                errors += s[i];
-                                continue;
-                            }
+                    _pos++;
 
-                            isLast = false;
-
-                            int line = Current.Line;
-                            int pos = _pos;
-                            int l = 0;
-                            _pos--;
-                            while (_pos > 0 && line == Current.Line)
-                            {
-                                l += Current.Lexeme.Length;
-
-                                _pos--;
-                            }
-                            _pos = pos;
-
-                            index = l + i;
-                            errors += s[i];
-                        }
-                        else
-                        {
-                            if (errors.Length > 0)
-                            {
-                                _log.Add($"[Delete] line={Current.Line} pos={index} «{errors}» from «{Current.Lexeme}», expected «{expected}»");
-                            }
-
-                            errors = "";
-                            index = 0;
-
-                            isLast = true;
-                        }
-                    }
-                    if (errors.Length > 0)
-                    {
-                        _log.Add($"[Delete] line={Current.Line} pos={index} «{errors}» from «{Current.Lexeme}», expected «{expected}»");
-                    }
-
-                    Advance();
-
-                    return;
+                    t--;
                 }
-                _log.Add($"[Delete] line={Current.Line} pos={Current.Position} «{actual}», expected «{expected}»");
-                Advance();
+
+                if (Current.Type == expected)
+                {
+                    Logs.AddRange(logs);
+                }
+                else
+                {
+                    _pos = pos;
+
+                    Logs.Add($"[Грамматическая ошибка] строка: {Current.Line} позиция: {Current.Position} «{Current.Lexeme}» заменена на «{Token.GetTypeName(expected)}»");
+                    _pos++;
+                }
+
             }
             else
             {
-                // Вставка
-                _log.Add($"[Insert] line={Current.Line} pos={Current.Position} inserted «{expected}»");
+                _pos++;
+                if (syncSet.Contains(Current.Type))
+                {
+                    _pos--;
+                    Logs.Add($"[Грамматическая ошибка] строка: {Current.Line} позиция: {Current.Position} «{Current.Lexeme}» заменена на «{Token.GetTypeName(expected)}»");
+
+                    _pos++;
+                    return;
+                }
+                else
+                {
+                    _pos--;
+                    // Вставка
+                    Logs.Add($"[Грамматическая ошибка] строка: {Current.Line} позиция: {Current.Position} вставлен «{Token.GetTypeName(expected)}»");
+                }
+
             }
         }
 
@@ -118,7 +100,7 @@
         {
             if (Current.Type == expected)
             {
-                Advance();
+                _pos++;
             }
             else if (Current.Type == TokenType.EOF || syncSet.Contains(Current.Type))
             {
@@ -130,7 +112,7 @@
                 // удаление и попытка снова
                 ErrorRecovery(expected, syncSet);
                 if (Current.Type == expected)
-                    Advance();
+                    _pos++;
             }
         }
 
@@ -144,7 +126,7 @@
         // <OB> → '(' <FP>
         private void OB()
         {
-            Match(TokenType.LPAREN, FollowOB);
+            Match(TokenType.OBRACKET, FollowOB);
             FP();
         }
 
@@ -172,7 +154,7 @@
         // <CB> → ')' <VS>
         private void CB()
         {
-            Match(TokenType.RPAREN, FollowCB);
+            Match(TokenType.CBRACKET, FollowCB);
             VS();
         }
 

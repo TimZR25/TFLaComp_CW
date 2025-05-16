@@ -2,7 +2,7 @@
 {
     public enum TokenType
     {
-        READ, LPAREN, RPAREN, STAR, COMMA, SEMICOLON,
+        READ, OBRACKET, CBRACKET, STAR, COMMA, SEMICOLON,
         VARIABLE, EOF, UNKNOWN
     }
 }
